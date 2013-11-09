@@ -1,0 +1,305 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../src/keywordSuggest.js"></script>
+<link rel="stylesheet" type="text/css" href="keywordSuggest.css">
+<style>
+body{
+	font-size: 10pt;
+}
+#search_window {
+	padding-left: 298px;
+}
+
+.keywordSuggest-dropdown {
+	width: 360px;
+	min-height: 230px;
+}
+.keywordSuggest-comment {
+	width: 360px;
+}
+.keywordSuggest-comment .keywordSuggest-footer {
+	width: 360px;
+}
+.keywordSuggest-comment p {
+	padding: 4px 9px 9px 10px;
+	color: #666;
+}
+
+.keywordSuggest-keywords {
+	width: 200px;
+	min-height: 230px;
+	margin-right: 7px;
+}
+
+.keywordSuggest-footer {
+	width: 200px;
+	background-color: #eee;
+	height: 25px;
+}
+
+.keywordSuggest-footer div {
+	margin:5px;
+	font-size: 11px;
+}
+
+.keywordSuggest-footer div a {
+	text-decoration: none;
+	color: #666;
+	float:right;
+}
+
+.keywordSuggest-result {
+	width: 140px;
+	text-align: center;
+}
+
+.green_window {
+	display: -moz-inline-block;
+	display: -moz-inline-box;
+	display: inline-block;
+	width: 360px;
+	height: 26px;
+	margin-right: 5px;
+	border: 7px solid #2db400;
+	background-color: #fff;
+}
+
+.keywordSuggest-product {
+	margin:10px 0 3px 0;
+
+}
+
+.keywordSuggest-product img.product-img {
+	width: 137px;
+	height: 137px;
+	padding:3px; 
+	margin:0;
+	border:1px solid #ddd;
+}
+.keywordSuggest-product p {
+	margin:10px 0 3px 0;
+}
+.keywordSuggest-product a.product-title {
+	display: block;
+	text-decoration: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+}
+</style>
+<script>
+
+$(document).ready(function(){
+	
+	$("#searchInput").keywordSuggest({
+		toggleButtonOffsetX: 340,
+		toggleButtonOffsetY: 8,
+		toggleButtonOpenImg: 'images/btn_atcmp_up_on.gif',
+		toggleButtonCloseImg: 'images/btn_atcmp_down_on.gif',
+		dropdownOffsetX : -1,
+		dropdownOffsetY : 7,
+		enterPressed : enterPressed,
+		typingSearch: typingSearch,
+		onClickKeyword: clickKeyword,
+		onSelectKeyword: selectKeyword
+	});
+	
+});
+
+function enterPressed(value){
+	//검색을 수행한다.
+	console.log("enterPressed ", value);
+	//doSearch(value);
+}
+
+//자동완성 검색결과를 리턴하면 keywordSuggest 라이브러리에서 items를 알아서 뿌려준다.
+function typingSearch(value, callback){
+	//알아서 리턴.
+	value = $.trim(value);
+	
+	console.log("typingSearch ", value, "중국환율".indexOf(value));
+	if(value=="" || value=="aaa"){
+		callback({"items":[]});
+	}else if("중국환율".indexOf(value) == 0){
+		callback({
+			"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법", "중국환전싸게하는법","중국환율전망","중국 환경문제","중국환율조회","중국 환상의커플","중국 환율제도","오늘 중국 환율이 어떻게 되나요?","중국환율계산","오늘 중국 환율","중국환율떨어지는이유","중국환율계산법","중국 환경오염"]
+		});
+	}else{
+		callback({"items":["다나와", "다아라", "다이소", "다리미", "다다미", "다시마", "다시오세요"]});
+	}
+}
+
+function clickKeyword(obj){
+	console.log("## clickKeyword > ", obj, new Date());
+	
+	//case 1. 상품추천의 경우 우측의 상품정보 검색으로 연결.
+	showProductResult(obj);
+}
+
+function selectKeyword(obj){
+	console.log("## selectKeyword > ", obj);
+	showProductResult(obj);
+}
+
+function showProductResult(obj){
+	//우축의 상품정보를 검색해서 뿌려준다.알아서..
+	console.log("## showProductResult > ", obj);
+}
+
+</script>
+
+</head>
+
+
+<body>
+
+<h1>Keyword Suggest</h1>
+
+<h3>데모</h3>
+
+<div id="search_window">
+Search : 
+	<span class="green_window">
+		<input id="searchInput" class="keywordSuggest-input" type="text" data-target="#keywordSuggest"/>
+	</span>
+	<input type="button" class="search_button" value="search">
+	<div id="keywordSuggest" >
+		<a href="javascript:void(0)" class="keywordSuggest-toggle" data-toggle="keywordSuggest"><img src="images/btn_atcmp_down_on.gif" style="border:0"></a>
+		<div class="keywordSuggest-dropdown">
+			<div class="keywordSuggest-keywords">
+				<ul class="keywordSuggest-list">
+				</ul>
+				<div class="keywordSuggest-footer">
+					<div>
+						<a href="javascript:void(0)" data-off="keywordSuggest">자동완성끄기</a>
+					</div>
+				</div>
+			</div>
+			<div class="keywordSuggest-result">
+				<div class="keywordSuggest-product">
+					<img src='' class="product-img">
+					<p>
+						<a href="#" class="product-title">제품명</a>
+					</p>
+				</div>
+			</div>
+		</div>
+		
+		<div class="keywordSuggest-comment">
+			<p>현재 자동완성 기능을 사용하고 계십니다.</p>
+			<div class="keywordSuggest-footer">
+				<div>
+					<a href="javascript:void(0)" data-off="keywordSuggest">자동완성끄기</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<br><br>
+<h3>설명</h3>
+<p>
+검색창 하단에 자동완성결과를 보여주고, 그 오른쪽에 검색결과를 보여주는 검색라이브러리.
+</p>
+<p>
+사용법은 다음과 같다.
+</p>
+<pre>
+$("#searchInput").keywordSuggest({
+	toggleButtonOffsetX: 340,
+	toggleButtonOffsetY: 8,
+	toggleButtonOpenImg: 'btn_atcmp_up_on.gif',
+	toggleButtonCloseImg: 'btn_atcmp_down_on.gif',
+	dropdownOffsetX : -1,
+	dropdownOffsetY : 7,
+	enterPressed : enterPressed,
+	typingSearch: typingSearch,
+	onClickKeyword: clickKeyword,
+	onSelectKeyword: selectKeyword
+});
+</pre>
+<br><br>
+	<h3>설정법</h3>
+	<strong>$("#searchInput").keywordSuggest();</strong>
+	<p>
+	=&gt; QuickSearch를 사용하기위한 초기셋팅이다.<p>
+	input text 에   keywordSuggest()을 호출하여 생성한다.<p>
+	css는 keywordSuggest.css이며, js는 keywordSuggest.js가 제공된다.<p>
+	파라미터를 전달하여 세부설정을 할수 있으며 파라미터는 아래와 같다.<p>
+	<br><br>
+	<h3>파라미터정의</h3>
+	<ul>
+		<li>
+			<dl>
+				<dt>toggleButtonOffsetX, toggleButtonOffsetY
+				<dt>
+				<dd>입력창 우측안쪽의 화살표(토글이미지)의 위치. 입력창의 left,top 을 기준으로 offset을 더해서
+					위치시킨다.</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>toggleButtonOpenImg, toggleButtonCloseImg
+				<dt>
+				<dd>토글화살표의 열고 닫힐때의 이미지 경로.</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>dropdownOffsetX, dropdownOffsetY
+				<dt>
+				<dd>자동완성창의 열리는 위치. 입력창의 left,bottm 을 기준으로 offset을 더해서
+					위치시킨다.</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>enterPressed
+				<dt>
+				<dd>입력창에서 키워드입력후 엔터를 눌렀을때 호출된다. 인자로는 입력키워드가 전달된다.</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>typingSearch
+				<dt>
+				<dd>입력창에서 키워드입력시 키가 눌릴때마다 호출된다.인자로는 입력키워드가 전달되며, 이함수는 리턴값으로 정해진 포맷의 결과를 리턴해야 한다. 요소중 items 배열은 필수이다.
+					<br>
+					예제) <address>
+					{
+						"query" : ["wndrnrghks", "중국환"],
+						"suggest" : ["오늘 중국 환율이 어떻게 되나요?"],
+						"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법"]
+					}
+					</address>
+				 </dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>onClickKeyword
+				<dt>
+				<dd>자동완성창의 키워드를 마우스클릭시 호출된다. 우측에 상품리스트를 뿌리도록 구현한다.</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>onSelectKeyword
+				<dt>
+				<dd>자동완성창의 키워드를 키보드 상하버튼으로 이동시 호출된다. 우측에 상품리스트를 뿌리도록 구현한다.</dd>
+			</dl>
+		</li>
+	</ul>
+
+
+
+
+
+</body>
+
+<html>

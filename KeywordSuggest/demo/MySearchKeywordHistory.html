@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script>
+
+var MY_KEYWORD_COOKIE = "MY_KEYWORD_COOKIE";
+
+function setCookie(cookieName, value, expireDays) {
+	var expireDate = new Date();
+	expireDate.setDate(expireDate.getDate() + expireDays);
+	var cookieValue = escape(value)
+			+ ((expireDays == null) ? "" : "; expires=" + expireDate.toUTCString());
+	document.cookie = cookieName + "=" + cookieValue;
+}
+
+function getCookie(cookieName) {
+	var cookieValue = document.cookie;
+	var startIndex = cookieValue.indexOf(" " + cookieName + "=");
+	if (startIndex == -1) {
+		startIndex = cookieValue.indexOf(cookieName + "=");
+	}
+	if (startIndex == -1) {
+		cookieValue = null;
+	} else {
+		startIndex = cookieValue.indexOf("=", startIndex) + 1;
+		var endIndex = cookieValue.indexOf(";", startIndex);
+		if (endIndex == -1) {
+			endIndex = cookieValue.length;
+		}
+		cookieValue = unescape(cookieValue.substring(startIndex, endIndex));
+	}
+	return cookieValue;
+}
+
+function storeMyKeyword(keyword){
+	var myKeywordList = getMyKeywordList();
+	index = $.inArray(keyword, myKeywordList);
+	
+	if(index >= 0){
+		myKeywordList.splice(index, 1);
+	}
+	
+	//일단 push 
+	myKeywordList.push(keyword);
+	//10보다 크면 shift.
+	while(myKeywordList.length > 10){
+		myKeywordList.shift();
+	}
+	var keywordString = myKeywordList.join();
+	
+	setCookie(MY_KEYWORD_COOKIE, keywordString, 180);//180일저장.
+}
+
+function getMyKeywordList(){
+	var keywordString = getCookie(MY_KEYWORD_COOKIE);
+	if(keywordString != null){
+		return keywordString.split(",");
+	}else{
+		return [];
+	}
+}
+
+function showMyKeywordList(){
+	var myKeywordList = getMyKeywordList();
+	
+	$("#myKeywordList").empty();
+	
+	for(i=0;i<myKeywordList.length;i++){
+		$("#myKeywordList").prepend("<li><a href='javascript:doKeywordSearch(\""+myKeywordList[i]+"\")'>" + myKeywordList[i] + "</a></li>");		
+	}
+	
+}
+
+$(document).ready(function(){
+	showMyKeywordList();
+});
+</script>
+</head>
+<body>
+<div>
+<h3>My Search Keyword</h3>
+	<ul id="myKeywordList">
+	</ul>	
+</div>
+</body>
+</html>
