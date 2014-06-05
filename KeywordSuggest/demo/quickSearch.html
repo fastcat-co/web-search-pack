@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="../src/keywordSuggest.js"></script>
-<link rel="stylesheet" type="text/css" href="keywordSuggest.css">
+<link rel="stylesheet" type="text/css" href="../src/keywordSuggest.css">
 <style>
 body{
 	font-size: 10pt;
@@ -99,8 +99,8 @@ $(document).ready(function(){
 	$("#searchInput").keywordSuggest({
 		toggleButtonOffsetX: 340,
 		toggleButtonOffsetY: 8,
-		toggleButtonOpenImg: 'images/btn_atcmp_up_on.gif',
-		toggleButtonCloseImg: 'images/btn_atcmp_down_on.gif',
+		toggleButtonOpenImg: '../src/images/btn_atcmp_up_on.gif',
+		toggleButtonCloseImg: '../src/images/btn_atcmp_down_on.gif',
 		dropdownOffsetX : -1,
 		dropdownOffsetY : 7,
 		enterPressed : enterPressed,
@@ -165,7 +165,7 @@ function showProductResult(obj){
 <div id="search_window">
 Search : 
 	<span class="green_window">
-		<input id="searchInput" class="keywordSuggest-input" type="text" data-target="#keywordSuggest"/>
+		<input id="searchInput" data-target="#keywordSuggest" class="keywordSuggest-input" type="text"/>
 	</span>
 	<input type="button" class="search_button" value="search">
 	<div id="keywordSuggest" >

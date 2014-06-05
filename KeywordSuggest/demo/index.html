@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="../src/keywordSuggest.js"></script>
-<link rel="stylesheet" type="text/css" href="keywordSuggest.css">
+<link rel="stylesheet" type="text/css" href="../src/keywordSuggest.css">
 <style>
 body{
 	font-size: 10pt;
@@ -14,43 +14,7 @@ body{
 	padding-left: 298px;
 }
 
-.keywordSuggest-dropdown {
-	width: 360px;
-	min-height: 230px;
-}
-.keywordSuggest-comment {
-	width: 360px;
-}
-.keywordSuggest-comment .keywordSuggest-footer {
-	width: 360px;
-}
-.keywordSuggest-comment p {
-	padding: 4px 9px 9px 10px;
-	color: #666;
-}
 
-.keywordSuggest-keywords {
-	width: 360px;
-	min-height: 230px;
-	margin-right: 7px;
-}
-
-.keywordSuggest-footer {
-	width: 360px;
-	background-color: #eee;
-	height: 25px;
-}
-
-.keywordSuggest-footer div {
-	margin:5px;
-	font-size: 11px;
-}
-
-.keywordSuggest-footer div a {
-	text-decoration: none;
-	color: #666;
-	float:right;
-}
 
 
 .green_window {
@@ -73,30 +37,30 @@ $(document).ready(function(){
 	$("#searchInput").keywordSuggest({
 		toggleButtonOffsetX: 340,
 		toggleButtonOffsetY: 8,
-		toggleButtonOpenImg: 'images/btn_atcmp_up_on.gif',
-		toggleButtonCloseImg: 'images/btn_atcmp_down_on.gif',
+		toggleButtonOpenImg: '../src/images/btn_atcmp_up_on.gif',
+		toggleButtonCloseImg: '../src/images/btn_atcmp_down_on.gif',
 		dropdownOffsetX : -1,
 		dropdownOffsetY : 7,
-		enterPressed : enterPressed,
-		typingSearch: typingSearch,
-		onClickKeyword: clickKeyword,
-		onSelectKeyword: selectKeyword
+		enterPressed : enterPressedHandler,
+		typingSearch: typingSearchHandler,
+		keywordClicked: keywordClickHandler,
+		keywordSelected: keywordSelectHandler
 	});
 	
 });
 
-function enterPressed(value){
+function enterPressedHandler(value){
 	//검색을 수행한다.
-	console.log("enterPressed ", value);
+	console.log("enterPressedHandler ", value);
 	//doSearch(value);
 }
 
 //자동완성 검색결과를 리턴하면 keywordSuggest 라이브러리에서 items를 알아서 뿌려준다.
-function typingSearch(value, callback){
+function typingSearchHandler(value, callback){
 	//알아서 리턴.
 	value = $.trim(value);
 	
-	console.log("typingSearch ", value, "중국환율".indexOf(value));
+	console.log("typingSearchHandler ", value, "중국환율".indexOf(value));
 	if(value=="" || value=="aaa"){
 		callback({"items":[]});
 	}else if("중국환율".indexOf(value) == 0){
@@ -108,12 +72,12 @@ function typingSearch(value, callback){
 	}
 }
 
-function clickKeyword(obj){
-	console.log("## clickKeyword > ", obj, new Date());
+function keywordClickHandler(obj){
+	console.log("## keywordClickHandler > ", obj, new Date());
 }
 
-function selectKeyword(obj){
-	console.log("## selectKeyword > ", obj);
+function keywordSelectHandler(obj){
+	console.log("## keywordSelectHandler > ", obj);
 }
 
 </script>
@@ -130,11 +94,11 @@ function selectKeyword(obj){
 <div id="search_window">
 Search : 
 	<span class="green_window">
-		<input id="searchInput" class="keywordSuggest-input" type="text" data-target="#keywordSuggest"/>
+		<input id="searchInput" data-target="#keywordSuggestTarget" class="keywordSuggest-input" type="text"/>
 	</span>
 	<input type="button" class="search_button" value="search">
-	<div id="keywordSuggest" >
-		<a href="javascript:void(0)" class="keywordSuggest-toggle" data-toggle="keywordSuggest"><img src="images/btn_atcmp_down_on.gif" style="border:0"></a>
+	<div id="keywordSuggestTarget" >
+		<a href="javascript:void(0)" class="keywordSuggest-toggle" data-toggle="keywordSuggest"><img src="../src/images/btn_atcmp_down_on.gif" style="border:0"></a>
 		<div class="keywordSuggest-dropdown">
 			<div class="keywordSuggest-keywords">
 				<ul class="keywordSuggest-list">
@@ -145,14 +109,6 @@ Search :
 					</div>
 				</div>
 			</div>
-			<!-- <div class="keywordSuggest-result">
-				<div class="keywordSuggest-product">
-					<img src='' class="product-img">
-					<p>
-						<a href="#" class="product-title">제품명</a>
-					</p>
-				</div>
-			</div> -->
 		</div>
 		
 		<div class="keywordSuggest-comment">
@@ -182,10 +138,10 @@ $("#searchInput").keywordSuggest({
 	toggleButtonCloseImg: 'btn_atcmp_down_on.gif',
 	dropdownOffsetX : -1,
 	dropdownOffsetY : 7,
-	enterPressed : enterPressed,
-	typingSearch: typingSearch,
-	onClickKeyword: clickKeyword,
-	onSelectKeyword: selectKeyword
+	enterPressed : enterPressedHandler,
+	typingSearch: typingSearchHandler,
+	keywordClicked: keywordClickHandler,
+	keywordSelected: keywordSelectHandler
 });
 </pre>
 <br><br>
@@ -227,7 +183,7 @@ $("#searchInput").keywordSuggest({
 				<dt>enterPressed
 				<dt>
 				<dd>
-					정의 : function enterPressed(value)
+					정의 : function enterPressedHandler(value)
 				</dd>
 				<dd>
 					설명 : 입력창에서 키워드입력후 엔터를 눌렀을때 호출된다. value 파라미터로는 입력키워드가 전달된다.
@@ -238,10 +194,10 @@ $("#searchInput").keywordSuggest({
 			<dl>
 				<dt>typingSearch
 				<dt>
-				<dd>정의 : function typingSearch(value, callback)</dd>
+				<dd>정의 : function typingSearchHandler(value, callback)</dd>
 				<dd>설명 : 입력창에서 키워드입력시 키가 눌릴때마다 호출된다. value 파라미터로는 입력키워드가 전달되며, 이 함수는 리턴값으로 정해진 포맷의 결과를 리턴해야 한다. 요소중 items 배열은 필수이다.</dd>
 				<dd>간단예제 :
-<pre>function typingSearch(value, callback){
+<pre>function typingSearchHandler(value, callback){
 	callback({
 		"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법"]
 	});
@@ -250,7 +206,7 @@ $("#searchInput").keywordSuggest({
 				</dd>
 				
 				<dd>AJAX예제 : keyword파라미터로 검색어 전달시 json형식으로 list에 자동완성키워드를 반환하는 auto_completion.do 페이지를 준비해두었을 경우.
-<pre>function typingSearch(value, callback){
+<pre>function typingSearchHandler(value, callback){
 	value = $.trim(value);
 	$.ajax({ 
 		type:"get"
@@ -270,17 +226,17 @@ $("#searchInput").keywordSuggest({
 		</li>
 		<li>
 			<dl>
-				<dt>onClickKeyword
+				<dt>keywordClicked
 				<dt>
-				<dd>정의 : function clickKeyword(obj)</dd>
+				<dd>정의 : function keywordClickHandler(obj)</dd>
 				<dd>설명 : 자동완성창의 키워드를 마우스클릭시 호출된다. 전달 파라미터는 클릭한 단어이다.</dd>
 			</dl>
 		</li>
 		<li>
 			<dl>
-				<dt>onSelectKeyword
+				<dt>keywordSelected
 				<dt>
-				<dd>정의 : function selectKeyword(obj)</dd>
+				<dd>정의 : function keywordSelectHandler(obj)</dd>
 				<dd>설명 : 자동완성창의 키워드를 키보드 상하버튼으로 이동시 호출된다. 전달 파라미터는 키보드로 선택한 단어이다.</dd>
 			</dl>
 		</li>

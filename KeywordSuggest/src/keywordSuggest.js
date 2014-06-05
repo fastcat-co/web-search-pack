@@ -88,9 +88,9 @@
 		//타이핑시 자동완성 검색하는 함수.
 		var typingSearchFunction = this.options.typingSearch;
 		//자동완성 단어를 선택시 검색하는 함수. //KeywordSuggest를 보여주거나 submit하거나 selectSearch구현방법에 따라 선택할수 있다.
-		var onSelectKeyword = this.options.onSelectKeyword;
+		var keywordSelected = this.options.keywordSelected;
 		
-		var onClickKeyword = this.options.onClickKeyword;
+		var keywordClicked = this.options.keywordClicked;
 		
 		function setDisable(){
 			//console.log("disabled!! ");
@@ -238,7 +238,7 @@
 				//console.log("select ", that.$itemIndex, $selectedItem.text());
 				that.$element.val($selectedItem.text());
 				
-				onSelectKeyword($selectedItem.text());
+				keywordSelected($selectedItem.text());
 			}
 			
 		};
@@ -278,7 +278,7 @@
 				//click후 검색박스가 focus를 잃으면 key up/down이 안되므로 focus를 준다. 
 				that.$element.focus();
 				
-				onClickKeyword($(this).text());
+				keywordClicked($(this).text());
 			});
 		};
 		
