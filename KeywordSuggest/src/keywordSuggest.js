@@ -130,7 +130,7 @@
 		
 		//입력박스에 키 입력시 처리한다.
 		this.$element.on("keyup", function(e){
-			console.log("e.keyCode", e.keyCode, "input=", that.$element.val());
+			//console.log("e.keyCode", e.keyCode, "input=", that.$element.val());
 			if(! that.$enabled){
 				return;
 			}
