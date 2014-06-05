@@ -261,37 +261,62 @@ $("#searchInput").keywordSuggest({
 			<dl>
 				<dt>enterPressed
 				<dt>
-				<dd>입력창에서 키워드입력후 엔터를 눌렀을때 호출된다. 인자로는 입력키워드가 전달된다.</dd>
+				<dd>
+					정의 : function enterPressed(value)
+				</dd>
+				<dd>
+					설명 : 입력창에서 키워드입력후 엔터를 눌렀을때 호출된다. value 파라미터로는 입력키워드가 전달된다.
+				</dd>
 			</dl>
 		</li>
 		<li>
 			<dl>
 				<dt>typingSearch
 				<dt>
-				<dd>입력창에서 키워드입력시 키가 눌릴때마다 호출된다.인자로는 입력키워드가 전달되며, 이함수는 리턴값으로 정해진 포맷의 결과를 리턴해야 한다. 요소중 items 배열은 필수이다.
-					<br>
-					예제) <address>
-					{
-						"query" : ["wndrnrghks", "중국환"],
-						"suggest" : ["오늘 중국 환율이 어떻게 되나요?"],
-						"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법"]
-					}
-					</address>
-				 </dd>
+				<dd>정의 : function typingSearch(value, callback)</dd>
+				<dd>설명 : 입력창에서 키워드입력시 키가 눌릴때마다 호출된다. value 파라미터로는 입력키워드가 전달되며, 이 함수는 리턴값으로 정해진 포맷의 결과를 리턴해야 한다. 요소중 items 배열은 필수이다.</dd>
+				<dd>간단예제 :
+<pre>function typingSearch(value, callback){
+	callback({
+		"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법"]
+	});
+}
+				</pre>
+				</dd>
+				
+				<dd>AJAX예제 : keyword파라미터로 검색어 전달시 json형식으로 list에 자동완성키워드를 반환하는 auto_completion.do 페이지를 준비해두었을 경우.
+<pre>function typingSearch(value, callback){
+	value = $.trim(value);
+	$.ajax({ 
+		type:"get"
+		,url:"auto_completion.do"
+		,data:{ keyword:encodeURI(value), sn:1, ln:10 } //자동완성페이지에 value로 검색결과 10개를 요청한다.
+		,dataType:"json"
+		,success:function(data) {
+			callback({"items":data["list"]}); //json 결과의 list항목을 사용한다.
+		}
+		,fail:function(data) {
+		}
+	});
+}	
+</pre>
+				</dd>
 			</dl>
 		</li>
 		<li>
 			<dl>
 				<dt>onClickKeyword
 				<dt>
-				<dd>자동완성창의 키워드를 마우스클릭시 호출된다. 우측에 상품리스트를 뿌리도록 구현한다.</dd>
+				<dd>정의 : function clickKeyword(obj)</dd>
+				<dd>설명 : 자동완성창의 키워드를 마우스클릭시 호출된다. 전달 파라미터는 클릭한 단어이다.</dd>
 			</dl>
 		</li>
 		<li>
 			<dl>
 				<dt>onSelectKeyword
 				<dt>
-				<dd>자동완성창의 키워드를 키보드 상하버튼으로 이동시 호출된다. 우측에 상품리스트를 뿌리도록 구현한다.</dd>
+				<dd>정의 : function selectKeyword(obj)</dd>
+				<dd>설명 : 자동완성창의 키워드를 키보드 상하버튼으로 이동시 호출된다. 전달 파라미터는 키보드로 선택한 단어이다.</dd>
 			</dl>
 		</li>
 	</ul>
