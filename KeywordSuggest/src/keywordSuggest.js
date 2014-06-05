@@ -129,7 +129,7 @@
 		});
 		
 		//입력박스에 키 입력시 처리한다.
-		this.$element.on("keyup", function(e){
+		this.$element.on("keydown", function(e){
 			//console.log("e.keyCode", e.keyCode, "input=", that.$element.val());
 			if(! that.$enabled){
 				return;
@@ -337,6 +337,8 @@
 		this.$dataToggle.removeClass(KEYWORD_SUGGEST_CLOSE_CLASS);
 		this.$dataToggle.addClass(KEYWORD_SUGGEST_OPEN_CLASS);
 		this.$dataToggle.find("img").attr("src", this.options.toggleButtonOpenImg);
+		this.$dataToggle.find("img").attr("title", "자동완성 접기");
+		this.$dataToggle.find("img").attr("alt", "자동완성 접기");
 		
 	};
 
@@ -352,6 +354,8 @@
 		this.$dataToggle.removeClass(KEYWORD_SUGGEST_OPEN_CLASS);
 		this.$dataToggle.addClass(KEYWORD_SUGGEST_CLOSE_CLASS);
 		this.$dataToggle.find("img").attr("src", this.options.toggleButtonCloseImg);
+		this.$dataToggle.find("img").attr("title", "자동완성 펼치기");
+		this.$dataToggle.find("img").attr("alt", "자동완성 펼치기");
 	};
 
 	KeywordSuggest.prototype.toggle = function(showCommentIfNoResult) {

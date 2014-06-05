@@ -1,7 +1,7 @@
 ul.keywordSuggest-list {
 	padding-left: 0px;
 	padding: 0;
-	margin: 2px 0 2px 0;
+	margin: 4px 0 30px 0;
 }
 
 ul.keywordSuggest-list li {
@@ -78,6 +78,12 @@ ul.keywordSuggest-list li.keywordSuggestSelected {
 	width: 460px;
 	height: 70px;
 	background-color: #fff;
+}
+
+.keywordSuggest-comment p {
+	padding: 4px 9px 9px 10px;
+	color: #666;
+	font-size: 12px;
 }
 
 .keywordSuggest-result {
