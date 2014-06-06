@@ -127,17 +127,16 @@
 			
 			e.stopPropagation();
 		});
-		
+
 		//입력박스에 키 입력시 처리한다.
 		this.$element.on("keydown", function(e){
 			//console.log("e.keyCode", e.keyCode, "input=", that.$element.val());
 			if(! that.$enabled){
 				return;
 			}
-			
-			//e.preventDefault();
-			//e.stopPropagation();
-			
+			//keydown시 입력창의 내용을 바로 가져올수 없으므로, 50ms 이후에 수행한다.
+			setTimeout(function() {
+		
 			if($.trim(that.$element.val()) == ""){
 				//빈문자열이면 감추고 clear하고 리턴.
 				that.hide();
@@ -205,7 +204,8 @@
 					prevKeyword = that.$element.val();
 				}
 			}
-		                                     
+		  
+			}, 50);                                   
 		});
 		
 		$("body").on("click", function(e){

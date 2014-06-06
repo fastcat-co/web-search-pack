@@ -14,47 +14,15 @@ body{
 	padding-left: 298px;
 }
 
-.keywordSuggest-dropdown {
-	width: 360px;
-	min-height: 230px;
-}
-.keywordSuggest-comment {
-	width: 360px;
-}
-.keywordSuggest-comment .keywordSuggest-footer {
-	width: 360px;
-}
-.keywordSuggest-comment p {
-	padding: 4px 9px 9px 10px;
-	color: #666;
-}
-
-.keywordSuggest-keywords {
-	width: 200px;
-	min-height: 230px;
-	margin-right: 7px;
-}
-
-.keywordSuggest-footer {
-	width: 200px;
-	background-color: #eee;
-	height: 25px;
-}
-
-.keywordSuggest-footer div {
-	margin:5px;
-	font-size: 11px;
-}
-
-.keywordSuggest-footer div a {
-	text-decoration: none;
-	color: #666;
-	float:right;
-}
-
-.keywordSuggest-result {
-	width: 140px;
-	text-align: center;
+#searchInput {
+	width: 323px;
+	height: 17px;
+	margin: 3px 0 0 6px;
+	border: 0;
+	line-height: 18px;
+	font-weight: bold;
+	font-size: 14px;
+	outline: none;
 }
 
 .green_window {
@@ -68,22 +36,54 @@ body{
 	background-color: #fff;
 }
 
-.keywordSuggest-product {
+/*
+ * 필수설정 스타일. 자동완성 폭과 최소높이.
+*/
+.keywordSuggest-dropdown, .keywordSuggest-comment {
+	width: 610px;
+}
+.keywordSuggest-keywords, .keywordSuggest-footer {
+	width: 250px;
+}
+.keywordSuggest-keywords {
+	margin-right: 7px;	
+}
+
+.keywordSuggest-result {
+	width: 350px;
+}
+
+/*
+ * 데모용 우측 검색결과 레이어
+*/
+.demo-product {
 	margin:10px 0 3px 0;
 
 }
-
-.keywordSuggest-product img.product-img {
-	width: 137px;
-	height: 137px;
-	padding:3px; 
-	margin:0;
-	border:1px solid #ddd;
+.demo-result {
+	padding-left: 0;
+	margin: 10px 0;
+	list-style: none;
 }
-.keywordSuggest-product p {
-	margin:10px 0 3px 0;
+.demo-result li {
+	clear:both;
+	margin-bottom: 20px;
+	min-height: 50px;
 }
-.keywordSuggest-product a.product-title {
+img.demo-img {
+	width: 60px;
+	height: 60px;
+	border: 1px solid #ddd;
+	float: left;
+}
+.demo-description {
+	padding: 4px 0 0 0;
+}
+.demo-result p {
+	margin:3px 0 3px 75px;
+	font-size: 12px;
+}
+.demo-result a.demo-title {
 	display: block;
 	text-decoration: none;
 	white-space: nowrap;
@@ -91,6 +91,7 @@ body{
 	text-overflow: ellipsis;
 
 }
+
 </style>
 <script>
 
@@ -125,12 +126,8 @@ function typingSearch(value, callback){
 	console.log("typingSearch ", value, "중국환율".indexOf(value));
 	if(value=="" || value=="aaa"){
 		callback({"items":[]});
-	}else if("중국환율".indexOf(value) == 0){
-		callback({
-			"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법", "중국환전싸게하는법","중국환율전망","중국 환경문제","중국환율조회","중국 환상의커플","중국 환율제도","오늘 중국 환율이 어떻게 되나요?","중국환율계산","오늘 중국 환율","중국환율떨어지는이유","중국환율계산법","중국 환경오염"]
-		});
 	}else{
-		callback({"items":["다나와", "다아라", "다이소", "다리미", "다다미", "다시마", "다시오세요"]});
+		callback({"items":["맥북", "맥북에어", "맥북프로", "맥북프로 레티나", "맥북에어 레티나", "맥북에어 중고", "맥북에어 2014", "macbook"]});
 	}
 }
 
@@ -171,6 +168,7 @@ Search :
 	<div id="keywordSuggest" >
 		<a href="javascript:void(0)" class="keywordSuggest-toggle" data-toggle="keywordSuggest"><img src="images/btn_atcmp_down_on.gif" style="border:0"></a>
 		<div class="keywordSuggest-dropdown">
+			<!-- 키워드 리스트 시작 -->
 			<div class="keywordSuggest-keywords">
 				<ul class="keywordSuggest-list">
 				</ul>
@@ -180,14 +178,49 @@ Search :
 					</div>
 				</div>
 			</div>
+			<!--// 키워드 리스트 끝 -->
+			
+			<!-- 우측 검색결과 시작 -->
 			<div class="keywordSuggest-result">
-				<div class="keywordSuggest-product">
-					<img src='' class="product-img">
-					<p>
-						<a href="#" class="product-title">제품명</a>
-					</p>
-				</div>
+				<ul class="demo-result">
+					<li>
+						<img src='' class="demo-img">
+						<div class="demo-description">
+							<p>
+								<a href="#" class="demo-title">맥북프로 15인치 i5</a>
+							</p>
+							<p>
+								가격 20,000원 | 2014.10 | 제조사 아무개
+							</p>
+						</div>
+					</li>
+				
+					<li>
+						<img src='' class="demo-img">
+						<div class="demo-description">
+							<p>
+								<a href="#" class="demo-title">맥북에어 13인치 i5</a>
+							</p>
+							<p>
+								가격 20,000원 | 2014.10 | 제조사 아무개
+							</p>
+						</div>
+					</li>
+					
+					<li>
+						<img src='' class="demo-img">
+						<div class="demo-description">
+							<p>
+								<a href="#" class="demo-title">맥미니 i7 2014</a>
+							</p>
+							<p>
+								가격 20,000원 | 2014.10 | 제조사 아무개
+							</p>
+						</div>
+					</li>
+				</ul>
 			</div>
+			<!--// 우측 검색결과 끝	-->
 		</div>
 		
 		<div class="keywordSuggest-comment">

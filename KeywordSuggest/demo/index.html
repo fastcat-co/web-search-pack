@@ -14,8 +14,16 @@ body{
 	padding-left: 298px;
 }
 
-
-
+#searchInput {
+	width: 323px;
+	height: 17px;
+	margin: 3px 0 0 6px;
+	border: 0;
+	line-height: 18px;
+	font-weight: bold;
+	font-size: 14px;
+	outline: none;
+}
 
 .green_window {
 	display: -moz-inline-block;
@@ -28,6 +36,15 @@ body{
 	background-color: #fff;
 }
 
+/*
+ * 필수설정 스타일. 자동완성 폭과 최소높이.
+*/
+.keywordSuggest-dropdown, .keywordSuggest-keywords, .keywordSuggest-comment, .keywordSuggest-footer {
+	width: 360px;
+}
+.keywordSuggest-keywords {
+	min-height: 230px;
+}
 
 </style>
 <script>
@@ -94,7 +111,7 @@ function keywordSelectHandler(obj){
 <div id="search_window">
 Search : 
 	<span class="green_window">
-		<input id="searchInput" data-target="#keywordSuggestTarget" class="keywordSuggest-input" type="text"/>
+		<input id="searchInput" data-target="#keywordSuggestTarget" type="text" autocomplete="off" />
 	</span>
 	<input type="button" class="search_button" value="search">
 	<div id="keywordSuggestTarget" >
