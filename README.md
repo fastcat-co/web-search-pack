@@ -63,18 +63,20 @@ css는 `keywordSuggest.css`이며, js는 `keywordSuggest.js`가 제공된다.
  설명 : 입력창에서 키워드입력시 키가 눌릴때마다 호출된다. value 파라미터로는 입력키워드가 전달되며, 이 함수는 리턴값으로 정해진 포맷의 결과를 리턴해야 한다. 요소중 items 배열은 필수이다.
 
  간단예제 :
-```
+ 
+ ```
 function typingSearchHandler(value, callback){
 	callback({
 		"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법"]
 	});
 }
-```
+ ```
 
  AJAX예제 :
 
  keyword파라미터로 검색어 전달시 json형식으로 list에 자동완성키워드를 반환하는 auto_completion.do 페이지를 준비해두었을 경우.
-```
+ 
+ ```
 function typingSearchHandler(value, callback){
 	value = $.trim(value);
 	$.ajax({
@@ -89,7 +91,7 @@ function typingSearchHandler(value, callback){
 		}
 	});
 }
-```
+ ```
 
 - keywordClicked
 
