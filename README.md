@@ -104,3 +104,75 @@ function typingSearchHandler(value, callback){
  정의 : function keywordSelectHandler(obj)
 
  설명 : 자동완성창의 키워드를 키보드 상하버튼으로 이동시 호출된다. 전달 파라미터는 키보드로 선택한 단어이다.
+
+
+문자열 일치도 측정
+===============
+
+##설명
+
+입력한 문자열을 다른 문자열과 어느 정도 일치하는지 비교하여 점수를 출력하는 라이브러리이다.
+
+점수는 0~1점 사이이다.
+
+사용법은 다음과 같다.
+
+    var keyword = "";
+    var sortable = [];
+
+    function sort_score(a,b) {
+        b.score = b.name.score(keyword);
+        a.score = a.name.score(keyword);
+        return b.score - a.score;
+    }
+
+    function print_sort(arr) {
+        var list = $("ol");
+        list.html("");
+        $.each(sortable, function(i,v) {
+            list.append("<li>" + v.name + ", " + v.score +"</li>" );
+        });
+    }
+
+    function arrayfy(selector, arr) {
+        $(selector).children().each(function(){
+            arr.push({name: $(this).html(), score: 0});
+        });
+    }
+
+    $(function(){
+
+        arrayfy("ol", sortable);
+        print_sort(sortable);
+        $("#keyword").keyup(function(){
+            keyword = $(this).val();
+            sortable.sort(sort_score);
+            print_sort(sortable);
+        });
+    });
+
+
+##함수 설명
+
+ - function sort_score(a, b)
+
+ 설명 : 두 문자열의 점수 차이를 비교하여 a와 b 문자열의 일치도 수치 차이를 리턴하는 함수.
+
+ - function print_sort(arr)
+
+ 설명 : 문자열 리스트 배열을 받아 다시 출력하는 함수
+
+ - function arrayfy(selector, arr)
+
+ 설명 : 문자열 배열을 복사
+
+
+##사용방법
+
+    arrayfy("ol", sortable);
+
+arrayfy는 가장 먼저 사용되어야 하며, 비교될 문자열 리스트 원본이 존재하는 부분이 첫 번째 파라미터에 첨가되어야 한다.
+
+	list.append("<li>" + v.name + ", " + v.score +"</li>" );
+
+문자열 비교 및 일치도 점수 측정 후 호출 시에는 print_sort 함수에서 위 부분에서 태그를 입력하므로 html 태그 변경은 해당 부분을 수정하여야 한다.

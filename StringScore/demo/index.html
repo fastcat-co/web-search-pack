@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<title>String_score</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="../src/string_score.js"></script>
+<script>
+var keyword = "";
+var sortable = [];
+
+function sort_score(a,b)
+{
+	b.score = b.name.score(keyword);
+	a.score = a.name.score(keyword);
+	return b.score - a.score;
+}
+
+function print_sort(arr) {
+	var list = $("ol");
+	list.html("");
+	$.each(sortable, function(i,v) {
+		list.append("<li>" + v.name + ", " + v.score +"</li>" );
+	});
+}
+
+function arrayfy(selector, arr) {
+	$(selector).children().each(function(){
+		arr.push({name: $(this).html(), score: 0});
+	});
+}
+
+$(function(){
+
+	arrayfy("ol", sortable);
+	print_sort(sortable);
+	$("#keyword").keyup(function(){
+		keyword = $(this).val();
+		sortable.sort(sort_score);
+		print_sort(sortable);
+	});
+});
+</script>
+</head>
+<body>
+<label for="keyword">키워드 입력: </label>
+<input name="keyword" id="keyword" />
+<ol>
+	<li>한라산</li>
+	<li>제주도 한라산</li>
+	<li>한라산 선상봉</li>
+	<li>크리스마스</li>
+	<li>크리스마스 산타</li>
+	<li>크리스마스 산타할아버지</li>
+	<li>산타할아버지</li>
+</ol>
+</body>
+</html>
