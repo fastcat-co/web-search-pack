@@ -1,0 +1,102 @@
+.gncloud-autocomplete ul.keywordSuggest-list {
+	padding-left: 0px;
+	padding: 0;
+	margin: 4px 0 4px 0;
+}
+
+.gncloud-autocomplete ul.keywordSuggest-list li {
+	margin: 0;
+	padding: 0;
+	line-height: 18px;
+	list-style: none;
+	height: 23px;
+	vertical-align: middle;
+	cursor: pointer;
+	text-indent: 10px;
+	padding: 3px 0 2px;
+}
+
+.gncloud-autocomplete ul.keywordSuggest-list li a {
+	display: block;
+	text-indent: 10px;
+	padding: 4px 0;
+	text-decoration: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.gncloud-autocomplete ul.keywordSuggest-list li.keywordSuggestSelected {
+	background-color: #f5f5f5;
+}
+
+.gncloud-autocomplete .keywordSuggest-dropdown {
+	/*display:none;*/
+	overflow: hidden;
+	border: 1px solid #888d95;
+	zoom: 1;
+	/*width: 360px;*/
+	/*min-height: 230px;*/
+	background-color: #fff;
+	z-index:1000;
+}
+
+.gncloud-autocomplete .keywordSuggest-keywords {
+	float: left;
+	/*width: 360px;*/
+	width: 100%;
+	border-right: 1px solid #888d95;
+	/*min-height: 200px;*/
+	margin-right: 7px;
+}
+
+.gncloud-autocomplete .keywordSuggest-footer {
+	/*width: 360px;*/
+	/*width: 100%;*/
+	z-index: 999;
+	background-color: #eee;
+	height: 30px;
+	overflow: hidden;
+	position: absolute;
+	bottom: 0;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	border-top: 1px solid #ddd;
+}
+.gncloud-autocomplete .keywordSuggest-footer div {
+	margin:5px;
+	font-size: 11px;
+}
+
+.gncloud-autocomplete .keywordSuggest-footer div a {
+	text-decoration: none;
+	color: #666;
+	float:right;
+}
+.gncloud-autocomplete .keywordSuggest-comment {
+	/*display:none;*/
+	overflow: hidden;
+	/*border: 1px solid #888d95;*/
+	zoom: 1;
+	/*width: 360px;*/
+	/*height: 30px;*/
+	background-color: #fff;
+}
+.gncloud-autocomplete .keywordSuggest-comment .keywordSuggest-footer {
+	width: 100%;
+}
+.gncloud-autocomplete .keywordSuggest-comment p {
+	padding: 4px 9px 9px 10px;
+	color: #666;
+	font-size: 12px;
+}
+
+.gncloud-autocomplete .keywordSuggest-result {
+	float: left;
+	height: 100%;
+}
+
+.gncloud-autocomplete .keywordSuggest-result:after {
+	clear: both;
+}
+
