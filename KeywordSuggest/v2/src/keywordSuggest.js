@@ -593,17 +593,7 @@
 		var width  = options['dropdownWidth']  === undefined ? '' : 'width: ' + options['dropdownWidth'] + ';';
 		var height = options['dropdownHeight'] === undefined ? '' : 'max-height:' + options['dropdownHeight'] + ';';
 
-		var toggleBtnX = options['toggleButtonOffsetX'] === undefined ? 100 : options['toggleButtonOffsetX'];
-		var toggleBtnY = options['toggleButtonOffsetY'] === undefined ? -20 : options['toggleButtonOffsetY'];
-
 		var t = '';
-		//t += '    <div style="' + width + ' ' + height + ' z-index: 999; position:absolute;">';
-		//t += '    <a href="javascript:void(0)" class="keywordSuggest-toggle" data-toggle="keywordSuggest" style="float: right;">';
-		//if(options['toggleButtonFlag']) {
-		//	t += '        <img src="' + options['toggleButtonCloseImg'] + '" style="border:0; position: relative; left: ' + toggleBtnX + 'px; top: ' + toggleBtnY + 'px;">';
-		//}
-		//t += '    </a>';
-		//t += '    </div>';
 
 		if(options['panelBackground'] !== undefined && options['panelBackground'] != ''){
 			t += '    <div class="keywordSuggest-dropdown" style="' + width + ' ' + height + ' z-index: 999; background: ' + options['panelBackground'] + '">';
@@ -626,22 +616,12 @@
 			t += '                <a href="javascript:void(0)" data-toggle="keywordSuggest">닫기</a>';
 			t += '            </div>';
 			t += '                </div>';
-
-
-			//t += '                <div>';
-			//t += '                    <a href="javascript:void(0)" data-off="keywordSuggest">자동완성끄기</a>';
-			//t += '                </div>';
-
 			t += '            </div>';
 		}
 		t += '        </div>';
 		t += '    </div>';
 		if(options['toggleButtonFlag']){
 			t += '    <div class="keywordSuggest-comment" style="width:100%; z-index: 999;">';
-
-			//t += '        <div class="keywordSuggest-fastcat-desc" style="width:100%; height: 50px; background: white;">';
-			//t += '        <h2>Fastcat Search </h2>';
-			//t += '        </div>';
 
 			if(options['dropdownType'] !== undefined && options['dropdownType'] == 'static'){
 				t += '        <div class="keywordSuggest-footer" style="margin-bottom: 30px; border-left: 1px solid #888d95;margin-left: -1px;border-right: 1px solid #888d95;margin-right: 1px;">';
