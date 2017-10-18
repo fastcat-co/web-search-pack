@@ -1,0 +1,171 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>자동완성 v2 테스트</title>
+    <link href="./keywordSuggest.css" rel="stylesheet">
+    <style>
+        #searchInput {
+            width: 323px;
+            height: 17px;
+            margin: 3px 0 0 6px;
+            border: 0;
+            line-height: 18px;
+            font-weight: bold;
+            font-size: 14px;
+            outline: none;
+        }
+        .green_window {
+            display: -moz-inline-block;
+            display: -moz-inline-box;
+            display: inline-block;
+            width: 360px;
+            height: 26px;
+            margin-right: 5px;
+            border: 7px solid #2db400;
+            background-color: #fff;
+        }
+    </style>
+</head>
+<body>
+Search v2
+
+데모
+<br>
+<br>
+<br>
+<div align="center">
+
+
+    <span class="green_window">
+        <input type="text" class="form-control search keywordSuggest-input" name="search" value="" autocomplete="off" data-target="#keywordSuggestTarget" id="searchInput">
+	</span>
+    <input type="button" class="search_button" value="search">
+
+    <div id="keywordSuggestTarget" class="gncloud-autocomplete" align="center"></div>
+</div>
+
+
+<pre>
+설명
+
+검색창 하단에 자동완성결과를 보여진다.
+
+사용법은 다음과 같다.
+
+$("#searchInput").keywordSuggest({
+        toggleButtonFlag:true
+        , dropdownOffsetX : 0
+        , dropdownOffsetY : 0
+        , panelBackground:'white'
+        , keywordSuggestSelected: '#eee'
+        , textColor:'black'
+        , dropdownWidth:'230px'
+        , textEllipsis:true
+        , enterPressed : enterPressed
+        , typingSearch: typingSearch
+        , onClickKeyword: clickKeyword
+        , onSelectKeyword: selectKeyword
+});
+
+
+설정법
+
+$("#searchInput").keywordSuggest();
+=> QuickSearch를 사용하기위한 초기셋팅이다.
+
+input text 에 keywordSuggest()을 호출하여 생성한다.
+
+css는 keywordSuggest.css이며, js는 keywordSuggest.js가 제공된다.
+
+파라미터를 전달하여 세부설정을 할수 있으며 파라미터는 아래와 같다.
+
+
+
+파라미터정의
+
+toggleButtonFlag:true
+드롭다운 하단 자동완성 닫기 활성화 여부
+panelBackground:'white'
+드롭다운 배경 색
+keywordSuggestSelected: '#eee'
+선택된 키워드 색
+textColor:'black'
+글자 색
+dropdownWidth:'230px'
+드롭다운 사이즈
+textEllipsis:true
+자동완성 글자수가 많을 경우 드롭다운 사이즈에 맞게 ... 으로 표시 여부
+dropdownOffsetX, dropdownOffsetY
+자동완성창의 열리는 위치. 입력창의 left,bottm 을 기준으로 offset을 더해서 위치시킨다.
+enterPressed
+정의 : function enterPressed(value)
+설명 : 입력창에서 키워드입력후 엔터를 눌렀을때 호출된다. value 파라미터로는 입력키워드가 전달된다.
+typingSearch
+정의 : function typingSearch(value, callback)
+설명 : 입력창에서 키워드입력시 키가 눌릴때마다 호출된다. value 파라미터로는 입력키워드가 전달되며, 이 함수는 리턴값으로 정해진 포맷의 결과를 리턴해야 한다. 요소중 items 배열은 필수이다.
+간단예제 :
+function typingSearch(value, callback){
+callback({
+"items" : ["중국환율","중국환율계산기","중국환전중국환전싸게하는법중국환전싸게하는법"]
+});
+}
+
+AJAX예제 : keyword파라미터로 검색어 전달시 json형식으로 list에 자동완성키워드를 반환하는 auto_completion.do 페이지를 준비해두었을 경우.
+function typingSearch(value, callback){
+value = $.trim(value);
+$.ajax({
+type:"get"
+,url:"auto_completion.do"
+,data:{ keyword:encodeURI(value), sn:1, ln:10 } //자동완성페이지에 value로 검색결과 10개를 요청한다.
+,dataType:"json"
+,success:function(data) {
+callback({"items":data["list"]}); //json 결과의 list항목을 사용한다.
+}
+,fail:function(data) {
+}
+});
+}
+onClickKeyword
+정의 : function clickKeyword(obj)
+설명 : 자동완성창의 키워드를 마우스클릭시 호출된다. 전달 파라미터는 클릭한 단어이다.
+onSelectKeyword
+정의 : function selectKeyword(obj)
+설명 : 자동완성창의 키워드를 키보드 상하버튼으로 이동시 호출된다. 전달 파라미터는 키보드로 선택한 단어이다.
+</pre>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="keywordSuggest.js"></script>
+<script type="text/javascript">
+$(function(){
+    $("input[name=search]").keywordSuggest({
+            toggleButtonFlag:true
+            , dropdownOffsetX : -17
+            , dropdownOffsetY : 5
+            , panelBackground:'white'
+            , keywordSuggestSelected: '#eee'
+            , textColor:'black'
+            , dropdownWidth:'360px'
+            , textEllipsis:true
+            , typingSearch: function(value, callback){
+                var resultArr = new Array();
+
+                resultArr.push('mac book');
+                resultArr.push('mac air');
+                resultArr.push('mac mini');
+                resultArr.push('mac os');
+
+                callback({items:resultArr});
+            }, enterPressed: function(obj){
+                console.log("## enterPressed > ", obj);
+            }, keywordClicked: function(obj){
+                console.log("## keywordClicked > ", obj);
+            }, keywordSelected: function(obj){
+                console.log("## keywordSelected > ", obj);
+            }
+        });
+
+});
+
+</script>
+</body>
+</html>
