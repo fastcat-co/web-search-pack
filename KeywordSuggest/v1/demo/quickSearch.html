@@ -104,6 +104,7 @@ $(document).ready(function(){
 		toggleButtonCloseImg: '../src/images/btn_atcmp_down_on.gif',
 		dropdownOffsetX : -1,
 		dropdownOffsetY : 7,
+		delayedKeywordSuggest : false,
 		enterPressed : enterPressed,
 		typingSearch: typingSearch,
 		onClickKeyword: clickKeyword,
@@ -250,6 +251,7 @@ $("#searchInput").keywordSuggest({
 	toggleButtonCloseImg: 'btn_atcmp_down_on.gif',
 	dropdownOffsetX : -1,
 	dropdownOffsetY : 7,
+	delayedKeywordSuggest : false,
 	enterPressed : enterPressed,
 	typingSearch: typingSearch,
 	onClickKeyword: clickKeyword,
@@ -288,6 +290,14 @@ $("#searchInput").keywordSuggest({
 				<dt>
 				<dd>자동완성창의 열리는 위치. 입력창의 left,bottm 을 기준으로 offset을 더해서
 					위치시킨다.</dd>
+			</dl>
+		</li>
+		<li>
+			<dl>
+				<dt>delayedKeywordSuggest
+				<dt>
+				<dd>true로 설정할 경우 사용자가 입력하는 키 사이에 1초의 간격을 두어 키 입력시마다 검색 요청을 보내는 것을 방지한다.
+					1초 이상 키 입력을 하지 않을 경우에만 자동완성 검색 요청을 보낸다.</dd>
 			</dl>
 		</li>
 		<li>

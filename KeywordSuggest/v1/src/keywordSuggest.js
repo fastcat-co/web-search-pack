@@ -129,83 +129,95 @@
 		});
 
 		//입력박스에 키 입력시 처리한다.
+        var timer;
 		this.$element.on("keydown", function(e){
-			//console.log("e.keyCode", e.keyCode, "input=", that.$element.val());
+            //console.log("e.keyCode", e.keyCode, "input=", that.$element.val());
 			if(! that.$enabled){
 				return;
 			}
-			//keydown시 입력창의 내용을 바로 가져올수 없으므로, 50ms 이후에 수행한다.
-			setTimeout(function() {
-		
-			if($.trim(that.$element.val()) == ""){
-				//빈문자열이면 감추고 clear하고 리턴.
-				that.hide();
-				that.clearTypingList();
-				prevKeyword = that.$element.val();
+            if (that.options.delayedKeywordSuggest) {
+				// 2018-01-24 로즈시스템즈 전제현
+				// delayedKeywordSuggest 설정 시에는 사용자가 1초 이내에 다시 키를 입력하면 이전 키 입력에 의한 검색 요청을 취소하고 다시 검색한다.
+				// 키 입력이 이후 1초 동안 없다면 사용자가 마지막으로 입력한 값으로 검색 결과를 호출한다.
+                if (timer) {
+                    clearTimeout(timer);
+                }
+                timer = setTimeout(inputSearch, 1000);
+			} else {
+				// delayedKeywordSuggest가 false거나 null이면 기존대로 키 입력시마다 검색 요청
+                //keydown시 입력창의 내용을 바로 가져올수 없으므로, 50ms 이후에 수행한다.
+                setTimeout(inputSearch, 50);
 			}
-			
-			if ((e.keyCode==KeyCode.UP || e.keyCode == KeyCode.DOWN || e.keyCode == KeyCode.ESCAPE || e.keyCode == KeyCode.ENTER)) {
-				//enter 입력시 enterPressedFunction을 호출한다.
-				if (e.keyCode == KeyCode.ENTER) {
-					enterPressedFunction(that.$element.val());
-					return;
-				}
-				
-			    if (e.keyCode == KeyCode.UP){
-			    	if(that.isOpened()){
-			    		if(that.$itemIndex <= 1){
-				    		//닫는다.
-				    		that.hide();
-				    		if(that.$userKeyword != ""){
-				    			that.$element.val(that.$userKeyword);
-				    		}
-				    		//console.log("that.$userKeyword=", that.$userKeyword);
-				    	}else{
-				    		//선택이동 위로.
-				    		that.$itemIndex--;
-				    	}
-				    	//hide에도 호출필요.지우기.
-				    	that.updateSelection();
-			    	}
-			    }
-			    
-			    if (e.keyCode == KeyCode.DOWN){
-			    	if(that.isOpened()){
-				    	//if(that.$itemIndex > 0){
-			    		if(that.$itemIndex == 0){
-			    			that.$userKeyword = that.$element.val();
-			    			//console.log("that.$element.val()=", that.$element.val(), that.$userKeyword);
-			    		}
-			    		
-			    		//선택이동 아래로. 바운더리체크.
-			    		if(that.$itemIndex < typingListObj.children().length){
-			    			that.$itemIndex++;
-			    		}
-			    		
-			    	}else{
-			    		//연다.
-			    		that.showIfAvaliable();
-			    	}
-			    	that.updateSelection();
-			    }
-				
-			    
-			    if (e.keyCode == KeyCode.ESCAPE){
-			    	//닫는다.
-		    		that.hide();
-			    }
-			} else{
-				//키워드가 변했을때만 typing 검색을 한다.
-				if(that.$element.val() != prevKeyword){
-					
-					//callback을 받는다.
-					typingSearchFunction(that.$element.val(), drawTypingListCallback);
-					
-					prevKeyword = that.$element.val();
-				}
-			}
-		  
-			}, 50);                                   
+
+			function inputSearch() {
+                if($.trim(that.$element.val()) == ""){
+                    //빈문자열이면 감추고 clear하고 리턴.
+                    that.hide();
+                    that.clearTypingList();
+                    prevKeyword = that.$element.val();
+                }
+
+                if ((e.keyCode==KeyCode.UP || e.keyCode == KeyCode.DOWN || e.keyCode == KeyCode.ESCAPE || e.keyCode == KeyCode.ENTER)) {
+                    //enter 입력시 enterPressedFunction을 호출한다.
+                    if (e.keyCode == KeyCode.ENTER) {
+                        enterPressedFunction(that.$element.val());
+                        return;
+                    }
+
+                    if (e.keyCode == KeyCode.UP){
+                        if(that.isOpened()){
+                            if(that.$itemIndex <= 1){
+                                //닫는다.
+                                that.hide();
+                                if(that.$userKeyword != ""){
+                                    that.$element.val(that.$userKeyword);
+                                }
+                                //console.log("that.$userKeyword=", that.$userKeyword);
+                            }else{
+                                //선택이동 위로.
+                                that.$itemIndex--;
+                            }
+                            //hide에도 호출필요.지우기.
+                            that.updateSelection();
+                        }
+                    }
+
+                    if (e.keyCode == KeyCode.DOWN){
+                        if(that.isOpened()){
+                            //if(that.$itemIndex > 0){
+                            if(that.$itemIndex == 0){
+                                that.$userKeyword = that.$element.val();
+                                //console.log("that.$element.val()=", that.$element.val(), that.$userKeyword);
+                            }
+
+                            //선택이동 아래로. 바운더리체크.
+                            if(that.$itemIndex < typingListObj.children().length){
+                                that.$itemIndex++;
+                            }
+
+                        }else{
+                            //연다.
+                            that.showIfAvaliable();
+                        }
+                        that.updateSelection();
+                    }
+
+
+                    if (e.keyCode == KeyCode.ESCAPE){
+                        //닫는다.
+                        that.hide();
+                    }
+                } else{
+                    //키워드가 변했을때만 typing 검색을 한다.
+                    if(that.$element.val() != prevKeyword){
+
+                        //callback을 받는다.
+                        typingSearchFunction(that.$element.val(), drawTypingListCallback);
+
+                        prevKeyword = that.$element.val();
+                    }
+                }
+            }
 		});
 		
 		$("body").on("click", function(e){
